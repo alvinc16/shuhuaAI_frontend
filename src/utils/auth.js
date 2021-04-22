@@ -2,6 +2,7 @@ import Cookies from 'js-cookie'
 
 const TokenKey = 'vue_admin_template_token'
 const CookieKey = 'shuhuaAI_cookie'
+const CookieFinal = 'JSESSIONID'
 
 export function getToken() {
   return Cookies.get(TokenKey)
@@ -25,4 +26,7 @@ export function setCookie(cookie) {
 
 export function removeCoodie() {
   return Cookies.remove(CookieKey)
+}
+export function removeCookieFinal() {
+  return Cookies.remove(CookieFinal)
 }

@@ -32,18 +32,18 @@ export function login(data) {
 }
 
 // 获取用户个人信息
-export function getInfo(cookie) {
+export function getInfo() {
   return request({
     url: '/user/info',
-    method: 'get',
-    params: { cookie }
+    method: 'get'
+    // params: { cookie }
   })
 }
 
 // 退出登陆
 export function logout() {
   return request({
-    url: '/user/logout',
+    url: '/logout',
     method: 'get'
   })
 }

@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import { Message } from 'element-ui'
 import store from '@/store'
 import { getCookie } from '@/utils/auth'
 
@@ -7,7 +7,7 @@ import { getCookie } from '@/utils/auth'
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  timeout: 30000 // request timeout
 })
 
 // 请求拦截器
@@ -20,7 +20,7 @@ service.interceptors.request.use(
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
       // config.headers['X-Token'] = getCookie()
-      config.headers['Set-Cookie'] = getCookie()
+      config.headers['Fake-Cookie'] = getCookie()
     }
     console.log('this is 请求拦截器的请求')
     console.log(config)
@@ -47,10 +47,14 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
-    var resHeaders = response.headers
+    console.log('response的内容')
     console.log(response)
-    console.log('this is response.headers' + resHeaders)
-    var resTemp = response.data
+    var resTemp = response
+    // 把头像写死
+    resTemp.data.avatar = 'http://pic.616pic.com/ys_bnew_img/00/38/53/FxFjPVgKhQ.jpg'
+    resTemp.data.cookie = 'dontmoveit'
+    resTemp.data.name = 'just a name ok?'
+    resTemp.data.role = 'admin'
     if (resTemp.data.role) {
       var roles = [resTemp.data.role]
       // console.log(roles)

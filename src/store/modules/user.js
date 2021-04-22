@@ -1,6 +1,6 @@
 import { login, logout, getInfo } from '@/api/user'
 // import { getToken, setToken, removeToken } from '@/utils/auth'
-import { getCookie, setCookie, removeCoodie } from '@/utils/auth'
+import { getCookie, setCookie, removeCoodie, removeCookieFinal } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
 const getDefaultState = () => {
@@ -42,8 +42,9 @@ const actions = {
     const { username, password } = userInfo
     return new Promise((resolve, reject) => {
       login({ username: username.trim(), password: password }).then(response => {
-        console.log('zheli' + response)
-        const { data } = response
+        const data = response.data
+        console.log('看看这里是什么')
+        console.log(data)
         // commit('SET_TOKEN', data.token)
         // setToken(data.token)
         commit('SET_COOKIE', data.cookie)
@@ -60,7 +61,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       // getInfo(state.token).then(response => {
       getInfo(state.cookie).then(response => {
-        const { data } = response
+        const data = response.data
+        console.log('再看看这是什么')
         console.log(data)
         if (!data) {
           reject('Verification failed, please Login again.')
@@ -89,6 +91,7 @@ const actions = {
       logout(state.cookie).then(() => {
         // removeToken() // must remove  token  first
         removeCoodie()
+        removeCookieFinal()
         resetRouter()
         commit('RESET_STATE')
         resolve()
